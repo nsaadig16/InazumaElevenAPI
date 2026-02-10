@@ -1,11 +1,13 @@
 from pandas import DataFrame, Series
 from typing import Union, Dict, List
 
-def as_json(df : Union[DataFrame, Series]) -> Union[Dict, List]:
-    if isinstance(df, DataFrame):
-        return df.to_dict(orient="index")
-    elif isinstance(df, Series):
-        return df.to_dict()
+def as_json(obj : Union[DataFrame, Series, List], title : str = "") -> Dict:
+    if isinstance(obj, DataFrame):
+        return obj.to_dict(orient="index")
+    elif isinstance(obj, Series):
+        return obj.to_dict()
+    elif isinstance(obj, List):
+        return {title : obj}
     else:
         raise ValueError("Value is not a Dataframe or Series")
     
