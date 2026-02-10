@@ -1,0 +1,11 @@
+[project]
+name = "inazumaapi"
+version = "0.1.0"
+description = "An API for the first game in the Inazuma Eleven series."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.128.6",
+    "pandas>=3.0.0",
+    "uvicorn>=0.40.0",
+]
