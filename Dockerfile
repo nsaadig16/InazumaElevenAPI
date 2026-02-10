@@ -10,4 +10,6 @@ RUN uv sync
 
 COPY . .
 
-CMD [ "uvicorn", "/api/main:app", "-p", "8000", "--reload" ]
+EXPOSE 8000
+
+CMD [ "uv", "run", "uvicorn","--host", "0.0.0.0", "main:app", "--port", "8000", "--reload" ]
