@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD [ "uv", "run", "uvicorn","--host", "0.0.0.0", "main:app", "--port", "8000", "--reload" ]
+CMD [ "uv", "run", "uvicorn","--host", "0.0.0.0", "main:app", "--port", "$PORT", "--reload" ]
