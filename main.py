@@ -64,7 +64,7 @@ def get_all_players():
 @app.get("/players/{name}")
 def get_player_by_name(name : str):
     nrml_name = name.title()
-    if nrml_name not in df.index:
+    if nrml_name not in df.index.to_list():
         raise HTTPException(404, f"Player {nrml_name} not found")
     return as_json(df.loc[nrml_name])
 
@@ -75,7 +75,7 @@ def get_all_teams():
 @app.get("/teams/{team}")
 def get_players_by_team(team : str):
     nrml_team = normalize_team(team)
-    if nrml_team not in df["Team"]:
+    if nrml_team not in df["Team"].to_list():
         raise HTTPException(404, f"Team {nrml_team} not found")
     return as_json(df[df["Team"] == nrml_team])
 
@@ -86,7 +86,7 @@ def get_all_recruitment_types():
 @app.get("/recruitment/{recruitment_type}")
 def get_players_by_recruitment_type(rec_type : str):
     nrml_recruitment = rec_type.capitalize()
-    if nrml_recruitment not in df["Recruitment"]:
+    if nrml_recruitment not in df["Recruitment"].to_list():
         raise HTTPException(404, f"Recruitment type {nrml_recruitment} not found")
     return as_json(df[df["Recruitment"].str.contains(nrml_recruitment)])
 
@@ -97,7 +97,7 @@ def get_all_positions():
 @app.get("/positions/{position}")
 def get_players_by_position(position : str):
     nrml_position = normalize_position(position)
-    if nrml_position not in df["Position"]:
+    if nrml_position not in df["Position"].to_list():
         raise HTTPException(404, f"Position {nrml_position} not found")
     return as_json(df[df["Position"] == nrml_position])
 
@@ -108,7 +108,7 @@ def get_all_elements():
 @app.get("/elements/{element}")
 def get_players_by_element(element : str):
     nrml_element = element.capitalize()
-    if nrml_element not in df["Element"]:
+    if nrml_element not in df["Element"].to_list():
         raise HTTPException(404, f"Element {element} not found")
     return as_json(df[df["Element"] == nrml_element])
 
@@ -121,7 +121,7 @@ def get_all_moves():
 def get_players_by_move(move : str):
     nrml_move = move.title()
     mask = df[MOVE_COLS].apply(lambda r : nrml_move in r.values, axis = 1)
-    if nrml_move not in df[mask]:
+    if not mask.any():
         raise HTTPException(404, f"Move {nrml_move} not found") 
     return as_json(df[mask].reset_index())
 
